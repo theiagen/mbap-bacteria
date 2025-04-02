@@ -1,4 +1,4 @@
-# Bacterial Genomics Pipeline Workflow
+# Bacterial Genomics Pipeline
 
 ```mermaid
 flowchart TD
