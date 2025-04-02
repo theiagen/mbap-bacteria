@@ -154,7 +154,7 @@ process MLST {
     script:
     """
     mlst --nopath ${contigs} > output.tsv
-    echo -e "Sample\tSpecies\tST\tAllele1\tAllele2\tAllele3\tAllele4\tAllele5\tAllele6\tAllele7" > header.txt && cat header.txt output.tsv > mlst.tsv
+    echo -e "Sample\tScheme\tST\tAllele1\tAllele2\tAllele3\tAllele4\tAllele5\tAllele6\tAllele7" > header.txt && cat header.txt output.tsv > mlst.tsv
     """
 }
 
