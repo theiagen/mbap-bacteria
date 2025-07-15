@@ -288,9 +288,9 @@ process MICROREACT {
 workflow {
     ch_input = Channel.fromPath(params.input, checkIfExists: true)
                       .splitCsv(header: true)
-                      .map {it -> tuple(it.sample_id, it.fastq1, it.fastq2)}
+                      .map {it -> tuple(it.sample, it.fastq_1, it.fastq_2)}
     ch_logo = Channel.fromPath(params.logo, checkIfExists: true)
-    
+    ch_input.view()
     FASTP(ch_input)
 
     ASSEMBLY(FASTP.out.fastq)
