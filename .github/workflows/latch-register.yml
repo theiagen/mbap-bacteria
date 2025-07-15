@@ -1,0 +1,43 @@
+name: "Register to Latch.bio"
+
+on:
+  push:
+    branches:
+      - latch
+    tags:
+      - 'v*.*.*-latch'
+
+concurrency:
+  group: latch-register-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  register:
+    runs-on: ubuntu-24.04
+    name: "Register mbap-bacteria to Latch.bio"
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.10'
+      
+      - name: Setup Latch and Register
+        id: latch
+        uses: fulcrumgenomics/setup-latch@v2
+        with:
+          latch-workspace: ${{ secrets.LATCH_WORKSPACE }}
+          latch-token: ${{ secrets.LATCH_TOKEN }}
+          register: true
+          register-pkg-root: .
+          already-registered-do-not-fail: true
+          mark-as-release: ${{ startsWith(github.ref, 'refs/tags/v') && contains(github.ref, '-latch') }}
+      
+      - name: Print registration outputs
+        shell: bash
+        run: |
+          echo "Latch version: ${{ steps.latch.outputs.latch-version }}"
+          echo "Register version: ${{ steps.latch.outputs.register-version }}"
+          echo "Already registered: ${{ steps.latch.outputs.already-registered }}"
