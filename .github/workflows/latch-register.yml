@@ -26,7 +26,7 @@ jobs:
       
       - name: Setup Latch and Register
         id: latch
-        uses: fulcrumgenomics/setup-latch@v2
+        uses: theiagen/setup-latch@theia
         with:
           latch-workspace: ${{ secrets.LATCH_WORKSPACE }}
           latch-token: ${{ secrets.LATCH_TOKEN }}
